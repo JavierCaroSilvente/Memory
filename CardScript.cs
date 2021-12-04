@@ -10,8 +10,6 @@ public class CardScript : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = spriteBack;
-
-        gameObject.transform.position = new Vector3(-1, 3, 0);
     }
 
 }
