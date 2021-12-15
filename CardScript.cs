@@ -7,11 +7,16 @@ public class CardScript : MonoBehaviour
 {
     public Sprite spriteBack;
     public Sprite spriteFront;
+    public int type;
+
+    private GameManager gameManager;
 
     private bool faceUp;
 
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+
         gameObject.GetComponent<SpriteRenderer>().sprite = spriteBack;
     }
 
@@ -19,7 +24,10 @@ public class CardScript : MonoBehaviour
     {
         faceUp = !faceUp;
        if (faceUp ? gameObject.GetComponent<SpriteRenderer>().sprite = spriteFront : gameObject.GetComponent<SpriteRenderer>().sprite = spriteBack) { };
-       
+
+        gameManager.ClickOnCard(type);
     }
+
+   
 
 }

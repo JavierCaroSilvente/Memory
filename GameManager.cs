@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private List<GameObject> listaCartas = new List<GameObject>();
     public List<Sprite> listSprite;
     int[] contador = { 0, 0, 0, 0, 0 };
+    int[] types = { 7, 1, 0, 9, 6 };
 
     public int filasX;
     public int columnasY;
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
             }
 
             newCartaPrefab.GetComponent<CardScript>().spriteFront = listSprite[posRandom];
+            newCartaPrefab.GetComponent<CardScript>().type = types[posRandom];
 
             initPosX += 3;
 
@@ -53,5 +55,10 @@ public class GameManager : MonoBehaviour
                 initPosY += distanceBetweenCardsY;
             }
         }
+    }
+
+    public void ClickOnCard(int type)
+    {
+        Debug.Log("He hecho click on card " + type);
     }
 }
