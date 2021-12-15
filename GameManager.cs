@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject cartaPrefab;
     private List<GameObject> listaCartas = new List<GameObject>();
+    public List<Sprite> listSprite;
+    int[] contador = { 0, 0, 0, 0, 0 };
 
     public int filasX;
     public int columnasY;
@@ -25,6 +27,22 @@ public class GameManager : MonoBehaviour
             GameObject newCartaPrefab = Instantiate(cartaPrefab, new Vector3(initPosX, initPosY, 0), Quaternion.identity);
             listaCartas.Add(newCartaPrefab);
             newCartaPrefab.name = "card" + i;
+
+            bool encontrado = false;
+            int posRandom = 0; 
+
+            while (!encontrado)
+            {
+                posRandom = Random.Range(0, 5);
+
+                if (contador[posRandom] < 2)
+                {
+                    contador[posRandom] += 1;
+                    encontrado = true;
+                }
+            }
+
+            newCartaPrefab.GetComponent<CardScript>().spriteFront = listSprite[posRandom];
 
             initPosX += 3;
 

@@ -8,7 +8,7 @@ public class CardScript : MonoBehaviour
     public Sprite spriteBack;
     public Sprite spriteFront;
 
-    private bool position;
+    private bool faceUp;
 
     void Start()
     {
@@ -17,9 +17,8 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        position = !position;
-        Debug.Log("He hecho clic en la carta " + name);
-        if (position ? gameObject.GetComponent<SpriteRenderer>().sprite = spriteFront : gameObject.GetComponent<SpriteRenderer>().sprite = spriteBack) { };
+        faceUp = !faceUp;
+       if (faceUp ? gameObject.GetComponent<SpriteRenderer>().sprite = spriteFront : gameObject.GetComponent<SpriteRenderer>().sprite = spriteBack) { };
        
     }
 
