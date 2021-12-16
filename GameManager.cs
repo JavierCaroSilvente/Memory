@@ -1,25 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject cartaPrefab;
     private List<GameObject> listaCartas = new List<GameObject>();
     public List<Sprite> listSprite;
+
+    public Text Text;
+
     int[] contador = { 0, 0, 0, 0, 0 };
     int[] types = { 7, 1, 0, 9, 6 };
 
     public int filasX;
     public int columnasY;
 
-    public int totalCartasDescubiertas = 0;
-    public int cartaDescubierta1 = 0;
-    public int cartaDescubierta2 = 0;
+    private int totalCartasDescubiertas = 0;
+    private int cartaDescubierta1 = 0;
+    private int cartaDescubierta2 = 0;
+
+    private int puntuacion = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        Text.text = "Numero de parejas: " + puntuacion.ToString();
+
         int initPosX = -6;
         int initPosY = 2;
 
@@ -84,6 +92,9 @@ public class GameManager : MonoBehaviour
             if(cartaDescubierta1 == cartaDescubierta2)
             {
                 Debug.Log("Las cartas coinciden!");
+
+                puntuacion++;
+                Text.text = "Numero de parejas: " + puntuacion.ToString();
 
                 for (int i = 0; i < listaCartas.Count; i++)
                 {
