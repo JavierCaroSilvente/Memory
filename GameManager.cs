@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public Text Text;
 
+    public Button buttonResetGame;
+
     int[] contador = { 0, 0, 0, 0, 0 };
     int[] types = { 7, 1, 0, 9, 6 };
 
@@ -27,6 +29,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Text.text = "Numero de parejas: " + puntuacion.ToString();
+
+        buttonResetGame.gameObject.SetActive(false);
+        buttonResetGame.onClick.AddListener(ResetGame);
 
         int initPosX = -6;
         int initPosY = 2;
@@ -69,9 +74,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetGame()
+    {
+        for (int i = 0; i < listaCartas.Count; i++)
+        {
+            puntuacion = 0;
+            Text.text = "Numero de parejas: " + puntuacion.ToString();
+            listaCartas[i].SetActive(true);
+            listaCartas[i].GetComponent<CardScript>().faceUp = false;
+            listaCartas[i].GetComponent<SpriteRenderer>().sprite = listaCartas[i].GetComponent<CardScript>().spriteBack;
+            buttonResetGame.gameObject.SetActive(false);
+        }   
+    }
+
     public void ClickOnCard(int type)
     {
-        Debug.Log(type);
         totalCartasDescubiertas++;
 
        if(totalCartasDescubiertas <= 2)
@@ -117,7 +134,26 @@ public class GameManager : MonoBehaviour
 
                 StartCoroutine(ResetCartas(type));
             }
+
+            if(GameFinish() == true)
+            {
+                Text.text = "Has Ganado!";
+                buttonResetGame.gameObject.SetActive(true);
+            }
         }
+    }
+
+    private bool GameFinish()
+    {
+        for (int i = 0; i < listaCartas.Count; ++i)
+        {
+            if (listaCartas[i].gameObject.activeSelf == true)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     IEnumerator ResetCartas(int type)
