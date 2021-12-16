@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     public int filasX;
     public int columnasY;
 
+    public int totalCartasDescubiertas = 0;
+    public int cartaDescubierta1 = 0;
+    public int cartaDescubierta2 = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +63,62 @@ public class GameManager : MonoBehaviour
 
     public void ClickOnCard(int type)
     {
-        Debug.Log("He hecho click on card " + type);
+        Debug.Log(type);
+        totalCartasDescubiertas++;
+
+       if(totalCartasDescubiertas <= 2)
+       {
+            if (totalCartasDescubiertas == 1) 
+            {
+                cartaDescubierta1 = type;
+            }
+
+            if (totalCartasDescubiertas == 2)
+            {
+                cartaDescubierta2 = type;
+            }
+       }
+
+        if (totalCartasDescubiertas == 2)
+        {
+            if(cartaDescubierta1 == cartaDescubierta2)
+            {
+                Debug.Log("Las cartas coinciden!");
+
+                for (int i = 0; i < listaCartas.Count; i++)
+                {
+                    if(listaCartas[i].GetComponent<CardScript>().type == type)
+                    {
+                        listaCartas[i].gameObject.SetActive(false);
+                    }
+                }
+
+                totalCartasDescubiertas = 0;
+            }
+            else
+            {
+                Debug.Log("Las cartas NO coinciden!");
+                for (int i = 0; i < listaCartas.Count; i++)
+                {
+                    listaCartas[i].GetComponent<BoxCollider2D>().enabled = false;
+                    listaCartas[i].GetComponent<CardScript>().faceUp = false;
+                }
+
+                StartCoroutine(ResetCartas(type));
+            }
+        }
+    }
+
+    IEnumerator ResetCartas(int type)
+    {
+        yield return new WaitForSeconds(2);
+
+        for (int i = 0; i < listaCartas.Count; i++)
+        {
+            listaCartas[i].GetComponent<SpriteRenderer>().sprite = listaCartas[i].GetComponent<CardScript>().spriteBack;
+            listaCartas[i].GetComponent<BoxCollider2D>().enabled = true;
+        }
+
+        totalCartasDescubiertas = 0;
     }
 }

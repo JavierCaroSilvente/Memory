@@ -11,7 +11,7 @@ public class CardScript : MonoBehaviour
 
     private GameManager gameManager;
 
-    private bool faceUp;
+    public bool faceUp;
 
     void Start()
     {
@@ -23,6 +23,7 @@ public class CardScript : MonoBehaviour
     private void OnMouseDown()
     {
         faceUp = !faceUp;
+
        if (faceUp ? gameObject.GetComponent<SpriteRenderer>().sprite = spriteFront : gameObject.GetComponent<SpriteRenderer>().sprite = spriteBack) { };
 
         gameManager.ClickOnCard(type);
