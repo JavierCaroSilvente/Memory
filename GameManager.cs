@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        int[] contador = { 0, 0, 0, 0, 0 };
+
         for (int i = 0; i < listaCartas.Count; i++)
         {
             puntuacion = 0;
@@ -84,7 +86,24 @@ public class GameManager : MonoBehaviour
             listaCartas[i].GetComponent<CardScript>().faceUp = false;
             listaCartas[i].GetComponent<SpriteRenderer>().sprite = listaCartas[i].GetComponent<CardScript>().spriteBack;
             buttonResetGame.gameObject.SetActive(false);
-        }   
+
+            bool encontrado = false;
+            int posRandom = 0;
+
+            while (!encontrado)
+            {
+                posRandom = Random.Range(0, 5);
+
+                if (contador[posRandom] < 2)
+                {
+                    contador[posRandom] += 1;
+                    encontrado = true;
+                }
+            }
+
+            listaCartas[i].GetComponent<CardScript>().spriteFront = listSprite[posRandom];
+            listaCartas[i].GetComponent<CardScript>().type = types[posRandom];
+        }
     }
 
     public void ClickOnCard(int type)
